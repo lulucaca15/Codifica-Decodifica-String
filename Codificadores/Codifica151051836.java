@@ -4,12 +4,12 @@ public class Codifica151051836 implements Codifica {
 
     @Override
     public String codifica(String str) {
-        return "<<" + str + ">>";
+        return "<<" + str + ">>>";
     }
 
     @Override
     public String decodifica(String str) {
-        return str.substring(2, str.length() - 2);
+        return str.substring(2, str.length() - 3);
     }
 
     @Override
