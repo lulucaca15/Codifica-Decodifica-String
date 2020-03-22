@@ -19,7 +19,7 @@ import java.util.Base64;
  */
 public class Codifica11109498 implements Codifica{
     
-    private String palavraChave = "naovaisaberjamais12!!!!";
+    private String palavraChave = "#$%naov415aberjamais12!!!!";
     private static byte[] chave;
     private static SecretKeySpec chaveSecreta;
     
