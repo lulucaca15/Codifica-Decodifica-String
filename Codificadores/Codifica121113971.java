@@ -18,7 +18,7 @@ class CodificaByDouglasPacheco implements Codifica {
     @Override
     public String codifica(String str) {
         // TODO Auto-generated method stub
-        StringBuffer sb = new StringBuffer(x); /*cria uma StringBuffer que
+        StringBuffer sb = new StringBuffer(str); /*cria uma StringBuffer que
         recebe a String que é passada como argumento no método.
         */
         String a = sb.reverse().toString(); /*Cria uma string que armazena
@@ -45,7 +45,7 @@ class CodificaByDouglasPacheco implements Codifica {
     @Override
     public String decodifica(String str) {
         // TODO Auto-generated method stub
-        StringBuilder sl = new StringBuilder(i);/*Cria uma StringBuilder que
+        StringBuilder sl = new StringBuilder(str);/*Cria uma StringBuilder que
         recebe a mensagem criptografada*/
         
         sl.delete(0, 29);/*elimina os caracteres da posição 0 à 29, onde foi
