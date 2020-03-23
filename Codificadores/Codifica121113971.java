@@ -2,20 +2,19 @@ package Codificadores;
 
 public class Codifica121113971 implements Codifica {
 
-    @Override
+ 
     public String getNomeAutor() {
         // TODO Auto-generated method stub
         return "Douglas Pacheco";
     }
 
-    @Override
     public String getMatriculaAutor() {
         // TODO Auto-generated method stub
         //testes superiores
         return "12111397-1";
     }
 
-    @Override
+
     public String codifica(String str) {
         // TODO Auto-generated method stub
         StringBuffer sb = new StringBuffer(str); /*cria uma StringBuffer que
@@ -42,7 +41,7 @@ public class Codifica121113971 implements Codifica {
 
     }
 
-    @Override
+
     public String decodifica(String str) {
         // TODO Auto-generated method stub
         StringBuilder sl = new StringBuilder(str);/*Cria uma StringBuilder que
