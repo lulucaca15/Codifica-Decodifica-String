@@ -23,3 +23,8 @@ public class Codifica162041214 implements Codifica {
       return "João Vitor Narciso";
      }
 }
+ 
+  @Override
+   public String getMatriculaAutor() {
+    return "162041214";
+  }
