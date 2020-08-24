@@ -19,7 +19,7 @@ public class Codifica162041214 implements Codifica {
     }
     
     @Override
-    public String getNomeAutor() { che
+    public String getNomeAutor() {
       return "João Vitor Narciso";
      }
 }
