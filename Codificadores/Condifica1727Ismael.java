@@ -19,6 +19,8 @@ public class Condifica1727Ismael implements Codifica{
 
     @Override
     public String decodifica(String str) {
-        return null;
+        String aux = str.substring(2,str.length()-2);
+        String decodificada = new StringBuffer(aux).reverse().toString();
+        return decodificada;
     }
 }
