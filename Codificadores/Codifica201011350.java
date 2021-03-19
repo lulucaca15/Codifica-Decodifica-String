@@ -1,7 +1,7 @@
 package Codificadores;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 //Codificando
             //Passo 1 -> Quebrar a string original em partes de 4 caracteres.(A ultima parte pode ter 3,2 ou 1 char)
@@ -21,7 +21,6 @@ import java.util.ArrayList;
                 //Caso a parte final tenha 1 caracteres, nada deve ser feito.  
 
 public class Codifica201011350 implements Codifica {
-    //length = 64 + espaço = 65
     private static String base = "ABCDEFGHIJKLMNOPQRS TUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
     
     String frase = "Hoje e dia 10 de marco de 2020";
@@ -30,61 +29,40 @@ public class Codifica201011350 implements Codifica {
     public String codifica(String str) {
         String strCodificada = "";
 
-        ArrayList<String> strSplited = splitStringEvery("0123456789@", 4);
-
-        String[] strSplitedReverse;
-
-        System.out.println("Ultimo bloco do split - "+ strSplited.get(strSplited.size() - 1));
-        /*
-        for (int i = strSplited.size() - 1; i >= 0 ; i--) {
-            strSplitedReverse[i] = strSplited.get(strSplited.size());
-            System.out.println(strSplitedReverse[i]);
-        }*/
-/*
-        for (String block : strSplited) {
-            System.out.println(block);
-            if(block.length() == 4){
-                holder = basetest[2];
-                basetest[2] = basetest[0];
-                basetest[0] = holder;
-            }
-        }*/
-        char[] basetest = ("0123").toCharArray();
-        char holder;
-
+        //Passo 1
+        ArrayList<String> strSplited = splitStringEvery("0123456789@a", 4);
         
-        //Encode - Passo 3
-            //start -> 0,1,2,3
+        //Passo 2
+        ArrayList<String> strSplitedReverse = strSplited;
+        Collections.reverse(strSplitedReverse);
 
-            //0 -> 2
-            //2 -> 0
-            holder = basetest[2];
-            basetest[2] = basetest[0];
-            basetest[0] = holder;
+        //Passo 3
+        for (String bloco : strSplitedReverse) {
+            char holder;
+            char[] blocoArray = bloco.toCharArray();
 
-            //0 -> 3
-            //3 -> 0
-            holder = basetest[3];
-            basetest[3] = basetest[0];
-            basetest[0] = holder;
+                if(blocoArray.length == 4){
+                    //start -> 0,1,2,3
+                        //0 -> 2
+                        //2 -> 0
+                    holder = blocoArray[2];
+                    blocoArray[2] = blocoArray[0];
+                    blocoArray[0] = holder;
 
-            //end -> 3,1,0,2
+                        //0 -> 3
+                        //3 -> 0
+                    holder = blocoArray[3];
+                    blocoArray[3] = blocoArray[0];
+                    blocoArray[0] = holder;
+                    //end -> 3,1,0,2
+                    
+                    strCodificada += String.copyValueOf(blocoArray);
+                    System.out.println("Str Cod.++ => "+strCodificada);
+                } else if(blocoArray.length == 3){
 
-        
-
-        System.out.println("Encoded: "+String.valueOf(basetest));
-        int test = 18/4;
-        System.out.println("test"+test);
-        
-
-        for (char letra : str.toCharArray()) {
-            for (char letraBase : base.toCharArray()) {
-                if (letra == letraBase){
-                    strCodificada += "a";
                 }
-            }
         }
-        return base.length()+ "";
+        return strCodificada;
     }
 
     @Override
