@@ -23,18 +23,25 @@ import java.util.Collections;
 public class Codifica201011350 implements Codifica {
     private static String base = "ABCDEFGHIJKLMNOPQRS TUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
     
-    String frase = "Hoje e dia 10 de marco de 2020";
+    String frase = "Hoje e dia 10 de marco de 2020112";
 
     @Override
     public String codifica(String str) {
         String strCodificada = "";
 
         //Passo 1
-        ArrayList<String> strSplited = splitStringEvery("0123456789@a", 4);
+        ArrayList<String> strSplited = splitStringEvery(str, 4);
+        
         
         //Passo 2
         ArrayList<String> strSplitedReverse = strSplited;
         Collections.reverse(strSplitedReverse);
+
+        /* Desenvertendo
+        System.out.println("Frase invertida:"+ strSplitedReverse.toString());
+        Collections.reverse(strSplitedReverse);
+        System.out.println("Frase desenvertida:"+ strSplitedReverse.toString());
+        */
 
         //Passo 3
         for (String bloco : strSplitedReverse) {
@@ -57,9 +64,34 @@ public class Codifica201011350 implements Codifica {
                     //end -> 3,1,0,2
                     
                     strCodificada += String.copyValueOf(blocoArray);
-                    System.out.println("Str Cod.++ => "+strCodificada);
+                    System.out.println("Str Cod.++ (4)=> "+strCodificada);
                 } else if(blocoArray.length == 3){
-
+                    //Caso a parte final tenha 3 caracteres -> 0,1,2 -> 2,0,1. 
+                    //start -> 0,1,2
+                        //0 -> 2
+                        //2 -> 0
+                        holder = blocoArray[0];
+                        blocoArray[0] = blocoArray[2];
+                        blocoArray[2] = holder;
+                        //2,1,0
+                            //0 -> 3
+                            //3 -> 0
+                        holder = blocoArray[2];
+                        blocoArray[2] = blocoArray[1];
+                        blocoArray[1] = holder;
+                        //end -> 2,0,1
+                        strCodificada += String.copyValueOf(blocoArray);
+                        System.out.println("Str Cod.++ (3)=> "+strCodificada);
+                } else if (blocoArray.length == 2){
+                    //Caso a parte final tenha 2 caracteres -> 0,1 -> 1,0.
+                    holder = blocoArray[0];
+                    blocoArray[0] = blocoArray[1];
+                    blocoArray[1] = holder;
+                    strCodificada += String.copyValueOf(blocoArray);
+                    System.out.println("Str Cod.++ (2)=> "+strCodificada);
+                } else {
+                    strCodificada += String.copyValueOf(blocoArray);
+                    System.out.println("Str Cod.++ (1)=> "+strCodificada);
                 }
         }
         return strCodificada;
