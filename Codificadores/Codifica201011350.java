@@ -1,124 +1,163 @@
 package Codificadores;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
+
+import javax.xml.stream.events.Characters;
 
 //Codificando
-            //Passo 1 -> Quebrar a string original em partes de 4 caracteres.(A ultima parte pode ter 3,2 ou 1 char)
-            //Passo 2 -> Reorganizar as partes ao contrário. (ex: 3 partes -> 3,2,1);
-            //Passo 3 -> Em cada uma das partes, reorganizar os caracteres (posições dos caracteres): 0,1,2,3 para 3,1,0,2. 
-                //Caso a parte final tenha 3 caracteres -> 0,1,2 -> 2,0,1. 
-                //Caso a parte final tenha 2 caracteres -> 0,1 -> 1,0.
-                //Caso a parte final tenha 1 caracteres, nada deve ser feito.  
-        
+    //Passo 1 -> Quebrar a string original em partes de 4 caracteres.(A ultima parte pode ter 3,2 ou 1 char)
+    //Passo 2 -> Reorganizar as partes ao contrário. (ex: 3 partes -> 3,2,1);
+    //Passo 3 -> Em cada uma das partes, reorganizar os caracteres (posições dos caracteres): 0,1,2,3 para 3,1,0,2. 
+        //Caso a parte final tenha 3 caracteres -> 0,1,2 -> 2,0,1. 
+        //Caso a parte final tenha 2 caracteres -> 0,1 -> 1,0.
+        //Caso a parte final tenha 1 caracteres, nada deve ser feito.  
 
-        //Decodificando
-            //Passo 1 -> Quebrar a mensagem criptografada em partes de 4 caracteres A ultima parte pode ter 3,2 ou 1 char).
-            //Passo 2 -> Reorganizar as partes ao contrário. (ex: 3 partes -> 3,2,1);
-            //Passo 3 -> Em cada uma das partes, reorganizar os caracteres (posições dos caracteres): 0,1,2,3 para 3,1,0,2. 
-                //Caso a parte final tenha 3 caracteres -> 0,1,2 -> 2,0,1. 
-                //Caso a parte final tenha 2 caracteres -> 0,1 -> 1,0.
-                //Caso a parte final tenha 1 caracteres, nada deve ser feito.  
+//Decodificando
+    //Passo 1 -> Quebrar a mensagem criptografada em partes de 4 caracteres A ultima parte pode ter 3,2 ou 1 char).
+    //Passo 2 -> Reorganizar as partes ao contrário. (ex: 3 partes -> 3,2,1);
+    //Passo 3 -> Em cada uma das partes, reorganizar os caracteres (posições dos caracteres): 0,1,2,3 para 3,1,0,2. 
+        //Caso a parte final tenha 3 caracteres -> 0,1,2 -> 2,0,1. 
+        //Caso a parte final tenha 2 caracteres -> 0,1 -> 1,0.
+        //Caso a parte final tenha 1 caracteres, nada deve ser feito.  
 
 public class Codifica201011350 implements Codifica {
-    private static String base = "ABCDEFGHIJKLMNOPQRS TUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
-    
-    String frase = "Hoje e dia 10 de marco de 2020112";
 
     @Override
     public String codifica(String str) {
-        String strCodificada = "";
+        String encodedString = "";
 
-        //Passo 1
-        ArrayList<String> strSplited = splitStringEvery(str, 4);
-        
-        
-        //Passo 2
-        ArrayList<String> strSplitedReverse = strSplited;
+        // Passo 1 e 2 - 
+            //1) "Quebrar" a string original em partes de 4 caracteres.(A ultima parte pode ter 3,2 ou 1 char). 
+            //2) Reorganizar as partes ao contrário. (ex: 3 partes -> 3,2,1); 
+        ArrayList<String> strSplitedReverse = splitStringEvery(str, 4);
         Collections.reverse(strSplitedReverse);
 
-        /* Desenvertendo
-        System.out.println("Frase invertida:"+ strSplitedReverse.toString());
-        Collections.reverse(strSplitedReverse);
-        System.out.println("Frase desenvertida:"+ strSplitedReverse.toString());
-        */
-
-        //Passo 3
+        // Passo 3 - Em cada uma das partes, reorganizar os caracteres (posições dos
+        // caracteres)
         for (String bloco : strSplitedReverse) {
             char holder;
             char[] blocoArray = bloco.toCharArray();
+            if (blocoArray.length == 4) {
+                // start -> 0,1,2,3
+                // 0 -> 2
+                // 2 -> 0
+                holder = blocoArray[2];
+                blocoArray[2] = blocoArray[0];
+                blocoArray[0] = holder;
 
-                if(blocoArray.length == 4){
-                    //start -> 0,1,2,3
-                        //0 -> 2
-                        //2 -> 0
-                    holder = blocoArray[2];
-                    blocoArray[2] = blocoArray[0];
-                    blocoArray[0] = holder;
+                // 0 -> 3
+                // 3 -> 0
+                holder = blocoArray[3];
+                blocoArray[3] = blocoArray[0];
+                blocoArray[0] = holder;
+                // end -> 3,1,0,2
 
-                        //0 -> 3
-                        //3 -> 0
-                    holder = blocoArray[3];
-                    blocoArray[3] = blocoArray[0];
-                    blocoArray[0] = holder;
-                    //end -> 3,1,0,2
-                    
-                    strCodificada += String.copyValueOf(blocoArray);
-                    System.out.println("Str Cod.++ (4)=> "+strCodificada);
-                } else if(blocoArray.length == 3){
-                    //Caso a parte final tenha 3 caracteres -> 0,1,2 -> 2,0,1. 
-                    //start -> 0,1,2
-                        //0 -> 2
-                        //2 -> 0
-                        holder = blocoArray[0];
-                        blocoArray[0] = blocoArray[2];
-                        blocoArray[2] = holder;
-                        //2,1,0
-                            //0 -> 3
-                            //3 -> 0
-                        holder = blocoArray[2];
-                        blocoArray[2] = blocoArray[1];
-                        blocoArray[1] = holder;
-                        //end -> 2,0,1
-                        strCodificada += String.copyValueOf(blocoArray);
-                        System.out.println("Str Cod.++ (3)=> "+strCodificada);
-                } else if (blocoArray.length == 2){
-                    //Caso a parte final tenha 2 caracteres -> 0,1 -> 1,0.
-                    holder = blocoArray[0];
-                    blocoArray[0] = blocoArray[1];
-                    blocoArray[1] = holder;
-                    strCodificada += String.copyValueOf(blocoArray);
-                    System.out.println("Str Cod.++ (2)=> "+strCodificada);
-                } else {
-                    strCodificada += String.copyValueOf(blocoArray);
-                    System.out.println("Str Cod.++ (1)=> "+strCodificada);
-                }
+                encodedString += String.copyValueOf(blocoArray);
+            } else if (blocoArray.length == 3) {
+                // Caso a parte final tenha 3 caracteres -> 0,1,2 -> 2,0,1.
+                // start -> 0,1,2 (posições)
+                // 0 -> 2
+                // 2 -> 0
+                holder = blocoArray[0];
+                blocoArray[0] = blocoArray[2];
+                blocoArray[2] = holder;
+                // 2,1,0
+                // 0 -> 3
+                // 3 -> 0
+                holder = blocoArray[2];
+                blocoArray[2] = blocoArray[1];
+                blocoArray[1] = holder;
+                // end -> 2,0,1
+
+                encodedString += String.copyValueOf(blocoArray);
+            } else if (blocoArray.length == 2) {
+                // Caso a parte final tenha 2 caracteres -> 0,1 -> 1,0.
+                holder = blocoArray[0];
+                blocoArray[0] = blocoArray[1];
+                blocoArray[1] = holder;
+                encodedString += String.copyValueOf(blocoArray);
+            } else {
+                // Caso a parte final tenha 1 caracteres, nada deve ser feito.
+                encodedString += String.copyValueOf(blocoArray);
+            }
         }
-        return strCodificada;
+        
+        return changeCharacters("0"+encodedString);
     }
 
     @Override
     public String decodifica(String str) {
-        char[] basetest = ("3102").toCharArray();
-        char holder;
-       //Decode
-        //start 3,1,0,2
-           
-        //2,1,0,3
-        holder = basetest[3];
-        basetest[3] = basetest[0];
-        basetest[0] = holder;
+        String originalString = "";
+        ArrayList<String> strToDecode = new ArrayList<>();
 
-        //0,1,2,3
-        holder = basetest[2];
-        basetest[2] = basetest[0];
-        basetest[0] = holder;
+        for (char ch : str.toCharArray()) { 
+            strToDecode.add(Character.toString(ch)); 
+        }
+        
+        //Passo 1 -> Reorganizar as partes ao contrário. (ex: 3 partes -> 3,2,1);
+        Collections.reverse(strToDecode);
+        
+        //Passo 2 - "Quebrar" a mensagem criptografada em partes de 4 caracteres. A ultima parte pode ter 3,2 ou 1 char).
+        strToDecode = splitStringEvery(String.join(",", strToDecode).replaceAll(",", ""), 4);
 
-        System.out.println("Decoded: "+String.valueOf(basetest));
+        // Passo 3 - Em cada uma das partes, reorganizar os caracteres (posições dos
+        // caracteres originais)
+        for (String bloco : strToDecode) {
+            char holder;
+            char[] blocoArray = bloco.toCharArray();
+            if (blocoArray.length == 4) {
+                // start -> 2
+                // 0 -> 1
+                // 1 -> 0
+                holder = blocoArray[0];
+                blocoArray[0] = blocoArray[1];
+                blocoArray[1] = holder;
 
+                // 0 -> 3
+                // 3 -> 0
+                //0213
+                holder = blocoArray[1];
+                blocoArray[1] = blocoArray[2];
+                blocoArray[2] = holder;
+                // end -> 3,1,0,2
 
-        //end 0,1,2,3
-        return null;
+                originalString += String.copyValueOf(blocoArray);
+            } else if (blocoArray.length == 3) {
+                // Caso a parte final tenha 3 caracteres -> 0,1,2 -> 2,0,1.
+                // start -> 0,1,2 (posições)
+                // 0 -> 2
+                // 2 -> 0
+                holder = blocoArray[2];
+                blocoArray[2] = blocoArray[0];
+                blocoArray[0] = holder;
+                // 2,1,0
+                // 0 -> 3
+                // 3 -> 0
+                holder = blocoArray[1];
+                blocoArray[1] = blocoArray[2];
+                blocoArray[2] = holder;
+                // end -> 2,0,1
+
+                originalString += String.copyValueOf(blocoArray);
+            } else if (blocoArray.length == 2) {
+                /*
+                // Caso a parte final tenha 2 caracteres -> 0,1 -> 1,0.
+                holder = blocoArray[1];
+                blocoArray[1] = blocoArray[0];
+                blocoArray[0] = holder;
+                */
+                originalString += String.copyValueOf(blocoArray);
+            } else {
+                // Caso a parte final tenha 1 caracteres, nada deve ser feito.
+                originalString += String.copyValueOf(blocoArray);
+            }
+        }
+        return changeCharacters("1"+ originalString);
     }
 
     @Override
@@ -132,9 +171,9 @@ public class Codifica201011350 implements Codifica {
     }
 
     public ArrayList<String> splitStringEvery(String s, int interval) {
-        int arrayLength = (int) Math.ceil(((s.length() / (double)interval)));
+        int arrayLength = (int) Math.ceil(((s.length() / (double) interval)));
         ArrayList<String> result = new ArrayList<>(arrayLength);
-    
+
         int j = 0;
         int lastIndex = arrayLength - 1;
         for (int i = 0; i < lastIndex; i++) {
@@ -142,7 +181,32 @@ public class Codifica201011350 implements Codifica {
             j += interval;
         }
         result.add(lastIndex, s.substring(j));
-    
+
         return result;
+    }
+
+    public String changeCharacters(String str){
+        String originalTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
+        String changedTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
+        List<String> originalAsList = Arrays.asList(originalTable.split(""));
+        List<String> changedAsList = Arrays.asList(changedTable.split(""));
+        Collections.reverse(changedAsList);
+        
+        if (str.startsWith("1")){//Cracateres já alterados, revertendo mudanças.
+            str = str.substring(1,str.length());
+            str = str.replaceAll("~", " ");
+            return str;
+        } else if (str.startsWith("0")){ //Caracteres não alterados, fazendo mudanças.
+            str = str.substring(1,str.length());
+            str = str.replaceAll(" ", "~");
+            
+            for (int i = 0; i < originalAsList.size(); i++) {
+                for (int j = 0; j < changedAsList.size(); j++) {
+                    str.replaceAll(originalAsList.get(i),changedAsList.get(j));
+                }
+            } 
+            return str;
+        }
+        return str;
     }
 }
