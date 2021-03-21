@@ -186,27 +186,33 @@ public class Codifica201011350 implements Codifica {
     }
 
     public String changeCharacters(String str){
-        String originalTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
-        String changedTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
+        final String  originalTable = " ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz";
+        final String changedTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz~";
+
         List<String> originalAsList = Arrays.asList(originalTable.split(""));
         List<String> changedAsList = Arrays.asList(changedTable.split(""));
         Collections.reverse(changedAsList);
         
         if (str.startsWith("1")){//Cracateres já alterados, revertendo mudanças.
+            //TODO -> IMPLEMENTAR
             str = str.substring(1,str.length());
-            str = str.replaceAll("~", " ");
-            return str;
-        } else if (str.startsWith("0")){ //Caracteres não alterados, fazendo mudanças.
-            str = str.substring(1,str.length());
-            str = str.replaceAll(" ", "~");
-            
+            List<String> strAsList = Arrays.asList(str.split(""));
+
             for (int i = 0; i < originalAsList.size(); i++) {
-                for (int j = 0; j < changedAsList.size(); j++) {
-                    str.replaceAll(originalAsList.get(i),changedAsList.get(j));
-                }
+                str = str.replaceAll(changedAsList.get(i),originalAsList.get(i));
             } 
             return str;
+        } else if (str.startsWith("0")){ //Caracteres não alterados, realizando mudanças de caracteres.
+            str = str.substring(1,str.length());
+            List<String> strAsList = Arrays.asList(str.split(""));
+            
+            for (String element : strAsList) {
+                int positionAtOriginal = originalAsList.indexOf(element);
+                str = str.replaceAll(element, changedAsList.get(positionAtOriginal));
+            }
+            return str;
         }
+        
         return str;
     }
 }
