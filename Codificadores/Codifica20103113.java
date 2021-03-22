@@ -3,7 +3,8 @@ package Codificadores;
 
 public class Codifica20103113 implements Codifica {
 
-    private final String sheet ="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
+    private final String keyboard = " ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
+    private final String keychars = "@# AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890";
 
     @Override
     public String getNomeAutor() {
@@ -17,46 +18,59 @@ public class Codifica20103113 implements Codifica {
 
     @Override
     public String codifica(String str) {
-        String codificada = "";
+        String codifica1 = "";
         if(str.length() % 2 == 0) {
             for(int i = (int)(str.length() / 2); i > 0; i--) {
-                codificada += str.charAt(i- 1);
+                codifica1 += str.charAt(i- 1);
             }
             for(int i = str.length(); i > (int)(str.length() / 2); i--) {
-                codificada += str.charAt(i- 1);
+                codifica1 += str.charAt(i- 1);
             }
         } else {
             for(int i = (int)((str.length()) / 2); i > 0; i--) {
-                codificada += str.charAt(i- 1);
+                codifica1 += str.charAt(i- 1);
             }
-            codificada += str.charAt((int)((str.length()) / 2));
+            codifica1 += str.charAt((int)((str.length()) / 2));
             for(int i = str.length(); i > (int)(str.length() / 2) + 1; i--) {
-                codificada += str.charAt(i- 1);
+                codifica1 += str.charAt(i- 1);
             }
         }
-        return codificada;
+        String codifica2 = "";
+        for(int i = 0; i < codifica1.length(); i++){
+            char letra = codifica1.charAt(i);
+            char letraCodificada = keychars.charAt(keyboard.indexOf(letra));
+            codifica2 += letraCodificada;
+        }
+
+        return codifica2;
     }
 
     @Override
     public String decodifica(String str) {
-        String codificada = "";
-        if(str.length() % 2 == 0) {
-            for(int i = (int)(str.length() / 2); i > 0; i--) {
-                codificada += str.charAt(i- 1);
+        String decodifica1 = "";
+        for(int i = 0; i < str.length(); i++){
+            char letraCodificada = str.charAt(i);
+            char letra = keyboard.charAt(keychars.indexOf(letraCodificada));
+            decodifica1 += letra;
+        }
+        String decodifica2 = "";
+        if(decodifica1.length() % 2 == 0) {
+            for(int i = (int)(decodifica1.length() / 2); i > 0; i--) {
+                decodifica2 += decodifica1.charAt(i- 1);
             }
-            for(int i = str.length(); i > (int)(str.length() / 2); i--) {
-                codificada += str.charAt(i- 1);
+            for(int i = decodifica1.length(); i > (int)(decodifica1.length() / 2); i--) {
+                decodifica2 += decodifica1.charAt(i- 1);
             }
         } else {
-            for(int i = (int)((str.length()) / 2); i > 0; i--) {
-                codificada += str.charAt(i- 1);
+            for(int i = (int)((decodifica1.length()) / 2); i > 0; i--) {
+                decodifica2 += decodifica1.charAt(i- 1);
             }
-            codificada += str.charAt((int)((str.length()) / 2));
-            for(int i = str.length(); i > (int)(str.length() / 2) + 1; i--) {
-                codificada += str.charAt(i- 1);
+            decodifica2 += decodifica1.charAt((int)((decodifica1.length()) / 2));
+            for(int i = decodifica1.length(); i > (int)(decodifica1.length() / 2) + 1; i--) {
+                decodifica2 += decodifica1.charAt(i- 1);
             }
         }
-        return codificada;
+        return decodifica2;
     }
     
 }
