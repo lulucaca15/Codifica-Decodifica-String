@@ -5,7 +5,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/*  Codificando
+/*  Nome: Bruno Simm Alves
+    Matricula: 201011350
+
+    Codificando
         Passo 1 -> Modificar caracteres.
         Passo 2 -> Quebrar a string original em partes de 4 caracteres.(A ultima parte pode ter 3,2 ou 1 char)
         Passo 3 -> Reorganizar as partes ao contrário. (ex: 3 partes -> 3,2,1);
@@ -85,14 +88,12 @@ public class Codifica201011350 implements Codifica {
         str = changeCharacters(str,false);
 
         ArrayList<String> strToDecode = new ArrayList<>();
-
         for (char ch : str.toCharArray()) { 
             strToDecode.add(Character.toString(ch)); 
         }
         
         //Passo 2 -> Reorganizar as partes ao contrário. (ex: 3 partes -> 3,2,1);
         Collections.reverse(strToDecode);
-        
         
         //Passo 3 - "Quebrar" a mensagem criptografada em partes de 4 caracteres. A ultima parte pode ter 3,2 ou 1 char).
         StringBuilder strToDecodeAsString = new StringBuilder();
@@ -107,20 +108,14 @@ public class Codifica201011350 implements Codifica {
             char holder;
             char[] blockArray = block.toCharArray();
             if (blockArray.length == 4) {
-                // start -> 2
-                // 0 -> 1
-                // 1 -> 0
+
                 holder = blockArray[0];
                 blockArray[0] = blockArray[1];
                 blockArray[1] = holder;
 
-                // 0 -> 3
-                // 3 -> 0
-                //0213
                 holder = blockArray[1];
                 blockArray[1] = blockArray[2];
                 blockArray[2] = holder;
-                // end -> 3,1,0,2
 
                 originalString += String.copyValueOf(blockArray);
             } else if (blockArray.length == 3) {
@@ -166,7 +161,7 @@ public class Codifica201011350 implements Codifica {
     }
 
     public String changeCharacters(String str,boolean needChanges){
-        final String  originalTable = " ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz";
+        final String originalTable = " ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz";
         final String changedTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz~";
 
         List<String> originalAsList = Arrays.asList(originalTable.split(""));
@@ -179,7 +174,7 @@ public class Codifica201011350 implements Codifica {
                 int positionAtChanged = changedAsList.indexOf(element);
                 
                 if (positionAtChanged != -1){
-                    //Troca o eleme need alterado pelo da mesma posição correspondente na lista original.
+                    //Troca o elemento alterado pelo da mesma posição correspondente na lista original.
                     str = str.replaceFirst(element, originalAsList.get(positionAtChanged));
                 }
             }
