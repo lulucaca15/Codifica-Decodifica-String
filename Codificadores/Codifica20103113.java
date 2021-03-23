@@ -3,8 +3,8 @@ package Codificadores;
 
 public class Codifica20103113 implements Codifica {
 
-    private final String keyboard = " ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
-    private final String keychars = "@# AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890";
+    private final String ALPHABET = " ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
+    private final String KEYCHARS = "@# AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890";
 
     @Override
     public String getNomeAutor() {
@@ -38,7 +38,7 @@ public class Codifica20103113 implements Codifica {
         String codifica2 = "";
         for(int i = 0; i < codifica1.length(); i++){
             char letra = codifica1.charAt(i);
-            char letraCodificada = keychars.charAt(keyboard.indexOf(letra));
+            char letraCodificada = KEYCHARS.charAt(ALPHABET.indexOf(letra));
             codifica2 += letraCodificada;
         }
 
@@ -50,7 +50,7 @@ public class Codifica20103113 implements Codifica {
         String decodifica1 = "";
         for(int i = 0; i < str.length(); i++){
             char letraCodificada = str.charAt(i);
-            char letra = keyboard.charAt(keychars.indexOf(letraCodificada));
+            char letra = ALPHABET.charAt(KEYCHARS.indexOf(letraCodificada));
             decodifica1 += letra;
         }
         String decodifica2 = "";
