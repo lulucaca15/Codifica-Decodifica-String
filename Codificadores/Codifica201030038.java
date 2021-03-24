@@ -56,7 +56,7 @@ public class Codifica201030038 implements  Codifica{
 
                     if (tab.charAt(i) == s) {
 
-                        int p = Math.floorMod((i-deslc), tab.length());
+                        p = Math.floorMod((i-deslc), tab.length());
                         decodificada += tab.charAt(p);
                     }
                 }
