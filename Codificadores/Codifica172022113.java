@@ -7,7 +7,7 @@ public class Codifica172022113 implements Codifica {
     @Override
     public String codifica(String str) {
         String codificada = "";
-	codificada = Base64.getEncoder().encodeToString(str.getbytes());
+	codificada = Base64.getEncoder().encodeToString(str.getBytes());
         return codificada;
     }
 
