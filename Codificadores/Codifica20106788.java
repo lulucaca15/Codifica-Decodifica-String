@@ -88,10 +88,10 @@ public class Codifica20106788 implements Codifica{
 
       /*
         Este método decodifica a string informada por parâmetro
-        Retira os hifens e divide por 13 o valor numérico
+        Retira o primeiro hifen e divide por 13 o valor numérico
       */
       private int decodificaDigito(String cod){
-        int valor = Integer.parseInt(cod.substring(1, cod.length()));
+        int valor = Integer.parseInt(cod.substring(1));
         valor = valor/13;
         return valor;
       }
@@ -137,14 +137,15 @@ public class Codifica20106788 implements Codifica{
               char alterado = deslocandoConsoante(c, -1);
               descodificado = descodificado + alterado;
             }
-            else if (c == '-' && Character.isDigit(str.charAt(i+1)) && str.indexOf('-', i)!=-1){ //verifica se há hifen seguido por digito seguido por hífen--o que caracteriza um digito codificado
-                String valor = str.substring(i, str.indexOf('-', i)+1);//pega "-<digitos>-"
+            else if (c == '-' && (i+1)<str.length() && Character.isDigit(str.charAt(i+1)) && str.indexOf('-', i+1)!=-1){ //verifica se há hifen seguido por digito seguido por hífen--o que caracteriza um digito codificado
                 
-                int alterado = decodificaDigito(valor);
-                descodificado = descodificado + alterado;
+              String valor = str.substring(i, str.indexOf('-', i+1));//pega "-<digitos>"
+      
+              int alterado = decodificaDigito(valor);
+              descodificado = descodificado + alterado;
 
-                i = str.indexOf('-', i);
-            }
+              i = str.indexOf('-', i+1);
+          }
             else{
                 descodificado = descodificado + c;
             }
