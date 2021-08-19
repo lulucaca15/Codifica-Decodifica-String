@@ -1,7 +1,7 @@
 package Codificadores;
 
-public class Codifica032614 implements Codifica {
-    private static String tabela = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
+public class Codifica2010 implements Codifica {
+    private static String tabela = "XYZWVUTSRQPOMNOLQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz@#";
     private static int deslc = 2;
 
     @Override
@@ -40,12 +40,12 @@ public class Codifica032614 implements Codifica {
 
     @Override
     public String getMatriculaAutor() {
-        return "032614";
+        return "201024882";
     }
 
     @Override
     public String getNomeAutor() {
-        return "Bernardo Copstein";
+        return "Arthur Luz (calopsita)";
     }
 
 }
