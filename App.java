@@ -22,16 +22,16 @@ public class App {
 
     public static void main(String args[]) {
 
-        Path filesPath = Paths.get("./", "Codificadores");
-        System.out.println("Pasta:"+filesPath.getFileName());
+        Path filesPath = Paths.get("Codificadores");
+        System.out.println("Pasta:"+filesPath.toAbsolutePath());
         List<String> codificadores = null;
 
         try (Stream<Path> walk = Files.walk(filesPath)) {
             codificadores = walk
                 .map(x -> x.getFileName())
                 .map(x -> x.toString())
-                .filter(f -> !f.endsWith("Codifica.java"))
-                .filter(f -> f.endsWith(".java"))
+                .filter(f -> !f.equals("Codifica.class"))
+                .filter(f -> f.endsWith(".class"))
                 .map(s -> s.toString().substring(0, s.lastIndexOf('.')))
                 .collect(Collectors.toList());
 
@@ -45,6 +45,7 @@ public class App {
         String frase = "Hoje e dia 10 de marco de 2020";
         try {
             for (String cod : codificadores) {
+                System.out.println(cod);
                 Class<?> clazz = Class.forName("Codificadores." + cod);
                 Object ref = clazz.getConstructor().newInstance();
                 executaCodificacao((Codifica) ref, frase);
